@@ -83,39 +83,20 @@ function check(){
     const numero = clean(document.getElementById("m").value);
     const progetto = clean(document.getElementById("p").value);
 
-    // INVIO A FORMSPREE
-    fetch("https://formspree.io/f/mnjqnqlo", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            nome,
-            cognome,
-            data,
-            sport,
-            capelli,
-            numero,
-            progetto
-        })
-    });
-
-    // HASH DI CONTROLLO
     const ok =
-        h(nome) === 346768 &&
-        h(cognome) === 476812 &&
-        h(data) === 305901 &&
-        h(sport) === 217553 &&
-        h(capelli) === 156882 &&
-        h(numero) === 127989 &&
-        h(progetto) === 584221;
+        h(nome) === 112739 &&
+        h(cognome) === 457078 &&
+        h(data) === 559792 &&
+        h(sport) === 718325 &&
+        h(capelli) === 822185 &&
+        h(numero) === 8487 &&
+        h(progetto) === 308704;
 
     if (ok) {
         document.body.innerHTML = `
-        <div style="color:#00ff00; margin-top:40vh;">
-            <h1>ACCESSO CONSENTITO</h1>
-        </div>`;
+            <div style="color:#00ff00;margin-top:40vh;">
+                <h1>ACCESSO CONSENTITO</h1>
+            </div>`;
     } else {
         document.getElementById("msg").innerText = "ACCESSO NEGATO";
     }
@@ -124,3 +105,4 @@ function check(){
 
 </body>
 </html>
+
