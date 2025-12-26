@@ -11,11 +11,11 @@ body {
     color: #00ff00;
     font-family: "Courier New", monospace;
     text-align: center;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .container {
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 input {
@@ -59,7 +59,8 @@ button:hover {
     <input id="anno" placeholder="Quando sono nato?"><br>
     <input id="sport" placeholder="Che sport faccio?"><br>
     <input id="capelli" placeholder="Di che colore ho i capelli?"><br>
-    <input id="numero" placeholder="Che numero ho sulla maglia?"><br><br>
+    <input id="numero" placeholder="Che numero ho sulla maglia?"><br>
+    <input id="azienda" placeholder="Nome dell'azienda che sto cercando di realizzare?"><br><br>
 
     <button onclick="verifica()">VERIFICA</button>
 
@@ -74,23 +75,10 @@ function verifica() {
     const sport = document.getElementById("sport").value.trim().toLowerCase();
     const capelli = document.getElementById("capelli").value.trim().toLowerCase();
     const numero = document.getElementById("numero").value.trim();
+    const azienda = document.getElementById("azienda").value.trim().toLowerCase();
 
     const dataRaw = document.getElementById("anno").value;
     const dataSoloNumeri = dataRaw.replace(/\D/g, "");
-
-    // INVIO DATI A FORMSPREE
-    fetch("https://formspree.io/f/mnjqnqlo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            nome,
-            cognome,
-            data: dataRaw,
-            sport,
-            capelli,
-            numero
-        })
-    });
 
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
@@ -98,8 +86,9 @@ function verifica() {
     const sportOK = sport === "calcio";
     const capelliOK = ["mori", "marroni"].includes(capelli);
     const numeroOK = numero === "77";
+    const aziendaOK = ["eac", "electronic ascione company"].includes(azienda);
 
-    if (nomeOK && cognomeOK && dataOK && sportOK && capelliOK && numeroOK) {
+    if (nomeOK && cognomeOK && dataOK && sportOK && capelliOK && numeroOK && aziendaOK) {
         document.body.innerHTML = `
             <div style="
                 width:100vw;
