@@ -2,19 +2,24 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Verifica Identità</title>
+<title>Vediamo se hai capito chi sono</title>
 
 <style>
 body {
+    margin: 0;
     background: black;
     color: #00ff00;
-    font-family: monospace;
+    font-family: "Courier New", monospace;
     text-align: center;
-    margin: 0;
 }
 
 .container {
-    margin-top: 40px;
+    margin-top: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
 }
 
 input {
@@ -22,16 +27,15 @@ input {
     border: 1px solid #00ff00;
     color: #00ff00;
     padding: 10px;
-    margin: 6px;
     width: 90%;
-    max-width: 420px;
+    max-width: 400px;
 }
 
 button {
     margin-top: 20px;
     background: black;
-    color: #00ff00;
     border: 2px solid #00ff00;
+    color: #00ff00;
     padding: 12px 30px;
     cursor: pointer;
 }
@@ -40,66 +44,67 @@ button:hover {
     background: #00ff00;
     color: black;
 }
+
+#errore {
+    margin-top: 20px;
+    color: red;
+}
 </style>
 </head>
 
 <body>
 
-<h1>ACCESSO RISERVATO</h1>
+<h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
 
 <div class="container">
-    <input id="n" placeholder="Nome">
-    <input id="c" placeholder="Cognome">
-    <input id="d" placeholder="Data di nascita">
-    <input id="s" placeholder="Sport">
-    <input id="h" placeholder="Colore capelli">
-    <input id="m" placeholder="Numero maglia">
-    <input id="p" placeholder="Progetto futuro">
+    <label>Nome</label>
+    <input id="nome">
 
-    <button onclick="check()">VERIFICA</button>
-    <div id="msg"></div>
+    <label>Cognome</label>
+    <input id="cognome">
+
+    <label>Data di nascita</label>
+    <input id="anno">
+
+    <label>Sport</label>
+    <input id="sport">
+
+    <label>Colore capelli</label>
+    <input id="capelli">
+
+    <label>Numero maglia</label>
+    <input id="numero">
+
+    <label>Progetto futuro</label>
+    <input id="azienda">
+
+    <button onclick="invia()">INVIA</button>
+
+    <div id="errore"></div>
 </div>
 
 <script>
-function h(x){
-    let r = 7;
-    for (let i = 0; i < x.length; i++) {
-        r = (r * 31 + x.charCodeAt(i)) % 999999;
-    }
-    return r;
-}
+function invia() {
 
-function clean(v){
-    return v.toLowerCase().replace(/\s+/g,"");
-}
+    const formData = new FormData();
+    formData.append("nome", document.getElementById("nome").value);
+    formData.append("cognome", document.getElementById("cognome").value);
+    formData.append("data", document.getElementById("anno").value);
+    formData.append("sport", document.getElementById("sport").value);
+    formData.append("capelli", document.getElementById("capelli").value);
+    formData.append("numero", document.getElementById("numero").value);
+    formData.append("progetto", document.getElementById("azienda").value);
 
-function check(){
-
-    const nome = clean(document.getElementById("n").value);
-    const cognome = clean(document.getElementById("c").value);
-    const data = clean(document.getElementById("d").value.replace(/\D/g,""));
-    const sport = clean(document.getElementById("s").value);
-    const capelli = clean(document.getElementById("h").value);
-    const numero = clean(document.getElementById("m").value);
-    const progetto = clean(document.getElementById("p").value);
-
-    const ok =
-        h(nome) === 112739 &&
-        h(cognome) === 457078 &&
-        h(data) === 559792 &&
-        h(sport) === 718325 &&
-        h(capelli) === 822185 &&
-        h(numero) === 8487 &&
-        h(progetto) === 308704;
-
-    if (ok) {
-        document.body.innerHTML = `
-            <div style="color:#00ff00;margin-top:40vh;">
-                <h1>ACCESSO CONSENTITO</h1>
-            </div>`;
-    } else {
-        document.getElementById("msg").innerText = "ACCESSO NEGATO";
-    }
+    fetch("https://formspree.io/f/mnjqnqlo", {
+        method: "POST",
+        body: formData
+    })
+    .then(() => {
+        document.getElementById("errore").innerText = "ACCESSO NEGATO";
+    })
+    .catch(() => {
+        document.getElementById("errore").innerText = "ERRORE INVIO";
+    });
 }
 </script>
 
