@@ -2,26 +2,19 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Vediamo se hai capito chi sono</title>
+<title>Verifica Identità</title>
 
 <style>
 body {
-    margin: 0;
     background: black;
     color: #00ff00;
-    font-family: "Courier New", monospace;
+    font-family: monospace;
     text-align: center;
-    overflow-y: auto;
+    margin: 0;
 }
 
 .container {
-    margin-top: 30px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    font-size: 15px;
+    margin-top: 40px;
 }
 
 input {
@@ -29,19 +22,17 @@ input {
     border: 1px solid #00ff00;
     color: #00ff00;
     padding: 10px;
-    margin-top: 5px;
+    margin: 6px;
     width: 90%;
-    max-width: 400px;
-    font-size: 16px;
+    max-width: 420px;
 }
 
 button {
     margin-top: 20px;
     background: black;
-    border: 2px solid #00ff00;
     color: #00ff00;
+    border: 2px solid #00ff00;
     padding: 12px 30px;
-    font-size: 16px;
     cursor: pointer;
 }
 
@@ -49,60 +40,50 @@ button:hover {
     background: #00ff00;
     color: black;
 }
-
-#errore {
-    margin-top: 20px;
-    color: red;
-}
 </style>
 </head>
 
 <body>
 
-<h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
+<h1>ACCESSO RISERVATO</h1>
 
 <div class="container">
+    <input id="n" placeholder="Nome">
+    <input id="c" placeholder="Cognome">
+    <input id="d" placeholder="Data di nascita">
+    <input id="s" placeholder="Sport">
+    <input id="h" placeholder="Colore capelli">
+    <input id="m" placeholder="Numero maglia">
+    <input id="p" placeholder="Progetto futuro">
 
-    <label>Qual è il mio nome?</label>
-    <input id="nome">
-
-    <label>Qual è il mio cognome?</label>
-    <input id="cognome">
-
-    <label>Quando sono nato?</label>
-    <input id="anno">
-
-    <label>Che sport faccio?</label>
-    <input id="sport">
-
-    <label>Di che colore ho i capelli?</label>
-    <input id="capelli">
-
-    <label>Che numero ho sulla maglia?</label>
-    <input id="numero">
-
-    <label>Qual è il nome del progetto per il mio futuro?</label>
-    <input id="azienda">
-
-    <button onclick="verifica()">VERIFICA</button>
-
-    <div id="errore"></div>
+    <button onclick="check()">VERIFICA</button>
+    <div id="msg"></div>
 </div>
 
 <script>
-function verifica() {
+function h(x){
+    let r = 7;
+    for (let i = 0; i < x.length; i++) {
+        r = (r * 31 + x.charCodeAt(i)) % 999999;
+    }
+    return r;
+}
 
-    const nome = document.getElementById("nome").value.trim().toLowerCase();
-    const cognome = document.getElementById("cognome").value.trim().toLowerCase();
-    const sport = document.getElementById("sport").value.trim().toLowerCase();
-    const capelli = document.getElementById("capelli").value.trim().toLowerCase();
-    const numero = document.getElementById("numero").value.trim();
-    const azienda = document.getElementById("azienda").value.trim().toLowerCase();
+function clean(v){
+    return v.toLowerCase().replace(/\s+/g,"");
+}
 
-    const dataRaw = document.getElementById("anno").value;
-    const dataSoloNumeri = dataRaw.replace(/\D/g, "");
+function check(){
 
-    // ✅ INVIO A FORMSPREE (QUESTO È QUELLO CHE MANCAVA)
+    const nome = clean(document.getElementById("n").value);
+    const cognome = clean(document.getElementById("c").value);
+    const data = clean(document.getElementById("d").value.replace(/\D/g,""));
+    const sport = clean(document.getElementById("s").value);
+    const capelli = clean(document.getElementById("h").value);
+    const numero = clean(document.getElementById("m").value);
+    const progetto = clean(document.getElementById("p").value);
+
+    // INVIO A FORMSPREE
     fetch("https://formspree.io/f/mnjqnqlo", {
         method: "POST",
         headers: {
@@ -110,43 +91,33 @@ function verifica() {
             "Accept": "application/json"
         },
         body: JSON.stringify({
-            nome: nome,
-            cognome: cognome,
-            data: dataRaw,
-            sport: sport,
-            capelli: capelli,
-            numero: numero,
-            azienda: azienda
+            nome,
+            cognome,
+            data,
+            sport,
+            capelli,
+            numero,
+            progetto
         })
     });
 
-    const nomeOK = nome === "giovanni";
-    const cognomeOK = cognome === "ascione";
-    const dataOK = dataSoloNumeri.includes("28") && dataSoloNumeri.includes("01") && dataSoloNumeri.includes("11");
-    const sportOK = sport === "calcio";
-    const capelliOK = ["mori", "marroni"].includes(capelli);
-    const numeroOK = numero === "77";
-    const aziendaOK = ["eac", "electronic ascione company"].includes(azienda);
+    // HASH DI CONTROLLO
+    const ok =
+        h(nome) === 346768 &&
+        h(cognome) === 476812 &&
+        h(data) === 305901 &&
+        h(sport) === 217553 &&
+        h(capelli) === 156882 &&
+        h(numero) === 127989 &&
+        h(progetto) === 584221;
 
-    if (nomeOK && cognomeOK && dataOK && sportOK && capelliOK && numeroOK && aziendaOK) {
+    if (ok) {
         document.body.innerHTML = `
-            <div style="
-                width:100vw;
-                height:100vh;
-                background:black;
-                display:flex;
-                flex-direction:column;
-                justify-content:center;
-                align-items:center;
-                color:#00ff00;
-                font-family:monospace;
-            ">
-                <h1>ACCESSO CONSENTITO</h1>
-                <img src="foto.jpg" style="max-width:90%;max-height:80vh;">
-            </div>
-        `;
+        <div style="color:#00ff00; margin-top:40vh;">
+            <h1>ACCESSO CONSENTITO</h1>
+        </div>`;
     } else {
-        document.getElementById("errore").innerText = "ACCESSO NEGATO";
+        document.getElementById("msg").innerText = "ACCESSO NEGATO";
     }
 }
 </script>
