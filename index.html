@@ -104,13 +104,22 @@ function verifica() {
     // NORMALIZZAZIONE
     const n = nome.toLowerCase();
     const c = cognome.toLowerCase();
-    const a = anno.toLowerCase();
+    const a = anno
+  .toLowerCase()
+  .replace(/\s+/g, "")
+  .replace(/-/g, "/");
+
     const s = sport.toLowerCase();
     const cap = capelli.toLowerCase();
 
     const nomeOK = n === "giovanni";
     const cognomeOK = c === "ascione";
-    const annoOK = ["28/01/11", "28 gennaio 2011", "28-01-11", "28 01 11","28/01/2011"].includes(a);
+    const annoOK = (
+    a === "28/01/11" ||
+    a === "28/01/2011" ||
+    a === "28gennaio2011"
+);
+
     const sportOK = s === "calcio";
     const capelliOK = ["mori", "marroni"].includes(cap);
 
@@ -131,4 +140,5 @@ function verifica() {
 
 </body>
 </html>
+
 
