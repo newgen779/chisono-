@@ -57,26 +57,21 @@ button:hover {
 <h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
 
 <div class="container">
-    <label>Nome</label>
+
+    <label>Qual è il mio nome?</label>
     <input id="nome">
 
-    <label>Cognome</label>
+    <label>Qual è il mio cognome?</label>
     <input id="cognome">
 
-    <label>Data di nascita</label>
+    <label>Quando sono nato?</label>
     <input id="anno">
 
-    <label>Sport</label>
+    <label>Che sport faccio?</label>
     <input id="sport">
 
-    <label>Colore capelli</label>
+    <label>Di che colore ho i capelli?</label>
     <input id="capelli">
-
-    <label>Numero maglia</label>
-    <input id="numero">
-
-    <label>Progetto futuro</label>
-    <input id="azienda">
 
     <button onclick="invia()">INVIA</button>
 
@@ -86,14 +81,18 @@ button:hover {
 <script>
 function invia() {
 
+    const nome = document.getElementById("nome").value;
+    const cognome = document.getElementById("cognome").value;
+    const data = document.getElementById("anno").value;
+    const sport = document.getElementById("sport").value;
+    const capelli = document.getElementById("capelli").value;
+
     const formData = new FormData();
-    formData.append("nome", document.getElementById("nome").value);
-    formData.append("cognome", document.getElementById("cognome").value);
-    formData.append("data", document.getElementById("anno").value);
-    formData.append("sport", document.getElementById("sport").value);
-    formData.append("capelli", document.getElementById("capelli").value);
-    formData.append("numero", document.getElementById("numero").value);
-    formData.append("progetto", document.getElementById("azienda").value);
+    formData.append("nome", nome);
+    formData.append("cognome", cognome);
+    formData.append("data", data);
+    formData.append("sport", sport);
+    formData.append("capelli", capelli);
 
     fetch("https://formspree.io/f/mnjqnqlo", {
         method: "POST",
@@ -103,7 +102,7 @@ function invia() {
         document.getElementById("errore").innerText = "ACCESSO NEGATO";
     })
     .catch(() => {
-        document.getElementById("errore").innerText = "ERRORE INVIO";
+        document.getElementById("errore").innerText = "ERRORE DI INVIO";
     });
 }
 </script>
