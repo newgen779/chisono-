@@ -102,6 +102,24 @@ function verifica() {
     const dataRaw = document.getElementById("anno").value;
     const dataSoloNumeri = dataRaw.replace(/\D/g, "");
 
+    // ✅ INVIO A FORMSPREE (QUESTO È QUELLO CHE MANCAVA)
+    fetch("https://formspree.io/f/mnjqnqlo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            nome: nome,
+            cognome: cognome,
+            data: dataRaw,
+            sport: sport,
+            capelli: capelli,
+            numero: numero,
+            azienda: azienda
+        })
+    });
+
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
     const dataOK = dataSoloNumeri.includes("28") && dataSoloNumeri.includes("01") && dataSoloNumeri.includes("11");
