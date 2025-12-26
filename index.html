@@ -1,3 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Vediamo se hai capito chi sono</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    margin-top: 80px;
+}
+
+input {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px;
+    margin: 8px;
+    width: 260px;
+    font-size: 16px;
+}
+
+button {
+    background: black;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00ff00;
+    color: black;
+}
+
+#errore {
+    margin-top: 20px;
+    color: red;
+}
+
+#foto {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 999;
+}
+</style>
+</head>
+
+<body>
+
+<h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
+
+<div class="container">
+    <input id="nome" placeholder="Qual è il mio nome?"><br>
+    <input id="cognome" placeholder="Qual è il mio cognome?"><br>
+    <input id="anno" placeholder="Quando sono nato?"><br>
+    <input id="sport" placeholder="Che sport faccio?"><br>
+    <input id="capelli" placeholder="Di che colore ho i capelli?"><br><br>
+
+    <button onclick="verifica()">VERIFICA</button>
+
+    <div id="errore"></div>
+</div>
+
+<img id="foto" src="foto.jpg">
+
 <script>
 function verifica() {
     const nome = document.getElementById("nome").value;
@@ -6,7 +86,7 @@ function verifica() {
     const sport = document.getElementById("sport").value;
     const capelli = document.getElementById("capelli").value;
 
-    // INVIO DATI A FORMSPREE (senza cambiare pagina)
+    // INVIO DATI A FORMSPREE
     fetch("https://formspree.io/f/mnjqnqlo", {
         method: "POST",
         headers: {
@@ -19,9 +99,9 @@ function verifica() {
             sport: sport,
             capelli: capelli
         })
-    }).catch(() => {});
+    });
 
-    // NORMALIZZA
+    // NORMALIZZAZIONE
     const n = nome.toLowerCase();
     const c = cognome.toLowerCase();
     const a = anno.toLowerCase();
@@ -30,13 +110,7 @@ function verifica() {
 
     const nomeOK = n === "giovanni";
     const cognomeOK = c === "ascione";
-    const annoOK = [
-        "28/01/11",
-        "28-01-11",
-        "28 01 11",
-        "28/01/2011",
-        "28 gennaio 2011"
-    ].includes(a);
+    const annoOK = ["28/01/11", "28 gennaio 2011", "28-01-11", "28 01 11"].includes(a);
     const sportOK = s === "calcio";
     const capelliOK = ["mori", "marroni"].includes(cap);
 
@@ -54,3 +128,6 @@ function verifica() {
     }
 }
 </script>
+
+</body>
+</html>
