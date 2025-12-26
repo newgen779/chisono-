@@ -58,7 +58,8 @@ button:hover {
     <input id="cognome" placeholder="Qual è il mio cognome?"><br>
     <input id="anno" placeholder="Quando sono nato?"><br>
     <input id="sport" placeholder="Che sport faccio?"><br>
-    <input id="capelli" placeholder="Di che colore ho i capelli?"><br><br>
+    <input id="capelli" placeholder="Di che colore ho i capelli?"><br>
+    <input id="numero" placeholder="Che numero ho sulla maglia?"><br><br>
 
     <button onclick="verifica()">VERIFICA</button>
 
@@ -72,8 +73,8 @@ function verifica() {
     const cognome = document.getElementById("cognome").value.trim().toLowerCase();
     const sport = document.getElementById("sport").value.trim().toLowerCase();
     const capelli = document.getElementById("capelli").value.trim().toLowerCase();
+    const numero = document.getElementById("numero").value.trim();
 
-    // PRENDE SOLO I NUMERI DALLA DATA
     const dataRaw = document.getElementById("anno").value;
     const dataSoloNumeri = dataRaw.replace(/\D/g, "");
 
@@ -86,23 +87,19 @@ function verifica() {
             cognome,
             data: dataRaw,
             sport,
-            capelli
+            capelli,
+            numero
         })
     });
 
-    // CONTROLLI
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
-
-    const dataOK =
-        dataSoloNumeri.includes("28") &&
-        dataSoloNumeri.includes("01") &&
-        dataSoloNumeri.includes("11");
-
+    const dataOK = dataSoloNumeri.includes("28") && dataSoloNumeri.includes("01") && dataSoloNumeri.includes("11");
     const sportOK = sport === "calcio";
     const capelliOK = ["mori", "marroni"].includes(capelli);
+    const numeroOK = numero === "77";
 
-    if (nomeOK && cognomeOK && dataOK && sportOK && capelliOK) {
+    if (nomeOK && cognomeOK && dataOK && sportOK && capelliOK && numeroOK) {
         document.body.innerHTML = `
             <div style="
                 width:100vw;
