@@ -81,7 +81,7 @@ button:hover {
     <label>Che numero ho sulla maglia?</label>
     <input id="numero">
 
-    <label>Nome dell'azienda che sto cercando di realizzare?</label>
+    <label>Qual è il nome del progetto del mio futuro?</label>
     <input id="azienda">
 
     <button onclick="verifica()">VERIFICA</button>
@@ -102,7 +102,6 @@ function verifica() {
     const dataRaw = document.getElementById("anno").value;
     const dataSoloNumeri = dataRaw.replace(/\D/g, "");
 
-    // Controlli
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
     const dataOK = dataSoloNumeri.includes("28") && dataSoloNumeri.includes("01") && dataSoloNumeri.includes("11");
