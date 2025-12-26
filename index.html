@@ -15,7 +15,13 @@ body {
 }
 
 .container {
-    margin-top: 40px;
+    margin-top: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 15px;
 }
 
 input {
@@ -23,12 +29,14 @@ input {
     border: 1px solid #00ff00;
     color: #00ff00;
     padding: 10px;
-    margin: 8px;
-    width: 260px;
+    margin-top: 5px;
+    width: 90%;
+    max-width: 400px;
     font-size: 16px;
 }
 
 button {
+    margin-top: 20px;
     background: black;
     border: 2px solid #00ff00;
     color: #00ff00;
@@ -54,13 +62,27 @@ button:hover {
 <h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
 
 <div class="container">
-    <input id="nome" placeholder="Qual è il mio nome?"><br>
-    <input id="cognome" placeholder="Qual è il mio cognome?"><br>
-    <input id="anno" placeholder="Quando sono nato?"><br>
-    <input id="sport" placeholder="Che sport faccio?"><br>
-    <input id="capelli" placeholder="Di che colore ho i capelli?"><br>
-    <input id="numero" placeholder="Che numero ho sulla maglia?"><br>
-    <input id="azienda" placeholder="Nome dell'azienda che sto cercando di realizzare?"><br><br>
+
+    <label>Qual è il mio nome?</label>
+    <input id="nome">
+
+    <label>Qual è il mio cognome?</label>
+    <input id="cognome">
+
+    <label>Quando sono nato?</label>
+    <input id="anno">
+
+    <label>Che sport faccio?</label>
+    <input id="sport">
+
+    <label>Di che colore ho i capelli?</label>
+    <input id="capelli">
+
+    <label>Che numero ho sulla maglia?</label>
+    <input id="numero">
+
+    <label>Nome dell'azienda che sto cercando di realizzare?</label>
+    <input id="azienda">
 
     <button onclick="verifica()">VERIFICA</button>
 
@@ -80,6 +102,7 @@ function verifica() {
     const dataRaw = document.getElementById("anno").value;
     const dataSoloNumeri = dataRaw.replace(/\D/g, "");
 
+    // Controlli
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
     const dataOK = dataSoloNumeri.includes("28") && dataSoloNumeri.includes("01") && dataSoloNumeri.includes("11");
