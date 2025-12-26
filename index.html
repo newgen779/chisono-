@@ -1,92 +1,3 @@
-<script><!DOCTYPE html><!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<title>Vediamo se hai capito chi sono</title>
-
-<style>
-body {
-    margin: 0;
-    background: black;
-    color: #00ff00;
-    font-family: "Courier New", monospace;
-    text-align: center;
-    overflow: hidden;
-}
-
-.container {
-    margin-top: 80px;
-}
-
-input {
-    background: black;
-    border: 1px solid #00ff00;
-    color: #00ff00;
-    padding: 10px;
-    margin: 8px;
-    width: 260px;
-    font-size: 16px;
-}
-
-button {
-    background: black;
-    border: 2px solid #00ff00;
-    color: #00ff00;
-    padding: 12px 30px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #00ff00;
-    color: black;
-}
-
-#errore {
-    margin-top: 20px;
-    color: red;
-}
-
-#foto {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: 999;
-}
-</style>
-</head>
-
-<body>
-
-<h1>VEDIAMO SE HAI CAPITO CHI SONO</h1>
-
-<div class="container">
-    <input id="nome" placeholder="Qual è il mio nome?"><br>
-    <input id="cognome" placeholder="Qual è il mio cognome?"><br>
-    <input id="anno" placeholder="Quando sono nato?"><br>
-    <input id="sport" placeholder="Che sport faccio?"><br>
-    <input id="capelli" placeholder="Di che colore ho i capelli?"><br><br>
-
-    <button onclick="verifica()">VERIFICA</button>
-
-    <div id="errore"></div>
-</div>
-
-<img id="foto" src="foto.jpg">
-
-<!-- FORM NASCOSTO FORMSPREE -->
-<form id="formspreeForm" action="https://formspree.io/f/mnjqnqlo" method="POST" style="display:none;">
-  <input type="text" name="nome" id="f_nome">
-  <input type="text" name="cognome" id="f_cognome">
-  <input type="text" name="anno" id="f_anno">
-  <input type="text" name="sport" id="f_sport">
-  <input type="text" name="capelli" id="f_capelli">
-</form>
-
 <script>
 function verifica() {
     const nome = document.getElementById("nome").value;
@@ -95,16 +6,22 @@ function verifica() {
     const sport = document.getElementById("sport").value;
     const capelli = document.getElementById("capelli").value;
 
-    // INVIO A FORMSPREE
-    document.getElementById("f_nome").value = nome;
-    document.getElementById("f_cognome").value = cognome;
-    document.getElementById("f_anno").value = anno;
-    document.getElementById("f_sport").value = sport;
-    document.getElementById("f_capelli").value = capelli;
+    // INVIO DATI A FORMSPREE (senza cambiare pagina)
+    fetch("https://formspree.io/f/mnjqnqlo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nome: nome,
+            cognome: cognome,
+            anno: anno,
+            sport: sport,
+            capelli: capelli
+        })
+    }).catch(() => {});
 
-    document.getElementById("formspreeForm").submit();
-
-    // NORMALIZZAZIONE
+    // NORMALIZZA
     const n = nome.toLowerCase();
     const c = cognome.toLowerCase();
     const a = anno.toLowerCase();
@@ -137,8 +54,3 @@ function verifica() {
     }
 }
 </script>
-
-</body>
-</html>
-
-
