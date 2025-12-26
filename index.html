@@ -94,8 +94,10 @@ function verifica() {
     const nomeOK = nome === "giovanni";
     const cognomeOK = cognome === "ascione";
 
-    // 28/01/2011 → 28012011
-    const dataOK = dataSoloNumeri === "28012011" || dataSoloNumeri === "280111";
+    const dataOK =
+        dataSoloNumeri.includes("28") &&
+        dataSoloNumeri.includes("01") &&
+        dataSoloNumeri.includes("11");
 
     const sportOK = sport === "calcio";
     const capelliOK = ["mori", "marroni"].includes(capelli);
